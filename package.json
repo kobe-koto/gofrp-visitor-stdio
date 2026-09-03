@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "bundle": "bun build ./frp-visitor-stdio.ts --outdir ./dist --target bun --format esm --minify",
+    "dev": "bun --watch ./frp-visitor-stdio.ts"
+  },
   "devDependencies": {
     "@types/node": "^26.4.0"
   },
