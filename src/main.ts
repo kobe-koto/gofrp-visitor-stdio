@@ -21,7 +21,7 @@ export const run = (args: readonly string[] = process.argv.slice(2)): void => {
         return;
     }
 
-    const session = new FrpcSession(config.filePath);
+    const session = new FrpcSession(config.filePath, config.visitor.name);
     const bridge = new StdioBridge({
         host: config.visitor.bindHost,
         port: config.visitor.bindPort,

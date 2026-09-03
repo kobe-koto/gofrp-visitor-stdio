@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { spawn, type ChildProcess } from 'node:child_process';
 import {
     readFileSync,
@@ -5,6 +6,8 @@ import {
     unlinkSync,
     writeFileSync,
 } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 const LOCK_TIMEOUT_MS = 5_000;
 const RELEASE_LOCK_TIMEOUT_MS = 3_000;
@@ -169,9 +172,18 @@ export class FrpcSession {
     private released = false;
     private ownsFrpc = false;
 
-    constructor(private readonly configFilePath: string) {
-        this.lockPath = `${configFilePath}.lock`;
-        this.statePath = `${configFilePath}.sessions`;
+    constructor(
+        private readonly configFilePath: string,
+        visitorName: string,
+    ) {
+        // SHA-256 is available in Node/Bun, has a strong avalanche effect, and
+        // avoids adding a native or third-party hashing dependency.
+        const sessionId = createHash('sha256')
+            .update(`${configFilePath}-${visitorName}`, 'utf8')
+            .digest('hex');
+        const filePrefix = join(tmpdir(), `frp-visitor-stdio-${sessionId}`);
+        this.lockPath = `${filePrefix}.lock`;
+        this.statePath = `${filePrefix}.sessions`;
     }
 
     register(onFailure: FrpcFailureHandler): void {
