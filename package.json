@@ -8,6 +8,6 @@
     "@types/node": "^26.4.0"
   },
   "dependencies": {
-    "js-toml": "^2.0.1"
+    "confbox": "^0.3.0"
   }
 }

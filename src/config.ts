@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { load } from 'js-toml';
+import { parseTOML } from 'confbox';
 
 const DEFAULT_BIND_HOST = '127.0.0.1';
 
@@ -64,7 +64,7 @@ const selectVisitor = (
 
 const readTomlConfig = (configFilePath: string): TomlTable => {
     try {
-        return load(readFileSync(configFilePath, 'utf8'));
+        return parseTOML(readFileSync(configFilePath, 'utf8'));
     } catch (error: unknown) {
         const message = error instanceof Error ? error.message : String(error);
         throw new ConfigError(`failed to parse TOML config: ${message}`);
