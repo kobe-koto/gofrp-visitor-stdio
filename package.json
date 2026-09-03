@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "scripts": {
     "bundle": "bun build ./frp-visitor-stdio.ts --outdir ./dist --target bun --format esm --minify",
     "dev": "bun --watch ./frp-visitor-stdio.ts"
