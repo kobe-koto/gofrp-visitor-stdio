@@ -17,13 +17,15 @@ const asError = (error: unknown): Error =>
     error instanceof Error ? error : new Error(String(error));
 
 export class StdioBridge {
+    private readonly options: StdioBridgeOptions;
     private readonly retries: number;
     private readonly retryDelayMs: number;
     private socket: net.Socket | null = null;
     private retryTimer: ReturnType<typeof setTimeout> | null = null;
     private stopped = false;
 
-    constructor(private readonly options: StdioBridgeOptions) {
+    constructor(options: StdioBridgeOptions) {
+        this.options = options;
         this.retries = options.retries ?? DEFAULT_RETRIES;
         this.retryDelayMs = options.retryDelayMs ?? DEFAULT_RETRY_DELAY_MS;
     }

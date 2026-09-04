@@ -164,6 +164,7 @@ const terminate = (pid: number): void => {
 };
 
 export class FrpcSession {
+    private readonly configFilePath: string;
     private readonly lockPath: string;
     private readonly statePath: string;
     private frpc: ChildProcess | null = null;
@@ -173,9 +174,11 @@ export class FrpcSession {
     private ownsFrpc = false;
 
     constructor(
-        private readonly configFilePath: string,
+        configFilePath: string,
         visitorName: string,
     ) {
+        this.configFilePath = configFilePath;
+
         // SHA-256 is available in Node/Bun, has a strong avalanche effect, and
         // avoids adding a native or third-party hashing dependency.
         const sessionId = createHash('sha256')
