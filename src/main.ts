@@ -1,6 +1,6 @@
-import { loadProxyConfig, type ProxyConfig } from './config';
-import { FrpcSession } from './session';
-import { StdioBridge } from './stdio-bridge';
+import { loadProxyConfig, type ProxyConfig } from './config.ts';
+import { FrpcSession } from './session.ts';
+import { StdioBridge } from './stdio-bridge.ts';
 
 const ERROR_PREFIX = '[frp-visitor-stdio]';
 

@@ -1,4 +1,4 @@
 #!/usr/bin/env bun
-import { run } from './src/main';
+import { run } from './src/main.ts';
 
 run();
